@@ -1,0 +1,39 @@
+{
+  "name": "mercadoAqui",
+  "version": "1.0.0",
+  "main": "expo-router/entry",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "2.1.2",
+    "@react-native-community/checkbox": "^0.5.20",
+    "@react-native-picker/picker": "2.11.0",
+    "eas-cli": "^16.9.0",
+    "expo": "^53.0.0",
+    "expo-checkbox": "~4.1.4",
+    "expo-constants": "~17.1.6",
+    "expo-dev-client": "~5.2.0",
+    "expo-device": "~7.1.4",
+    "expo-image-picker": "~16.1.4",
+    "expo-linking": "~7.1.5",
+    "expo-notifications": "~0.31.3",
+    "expo-router": "~5.0.7",
+    "expo-status-bar": "~2.2.3",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "react-native": "0.79.3",
+    "react-native-safe-area-context": "5.4.0",
+    "react-native-screens": "~4.11.1",
+    "react-native-web": "^0.20.0",
+    "zustand": "^5.0.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@types/multer": "^1.4.12"
+  },
+  "private": true
+}
