@@ -1,14 +1,14 @@
-
 # 🛒 MercadoAqui – Comparador de Preços de Supermercado
 
 O **MercadoAqui** é um aplicativo mobile desenvolvido em **React Native com Expo**, que permite ao usuário:
 
-- Criar listas de compras
-- Comparar preços entre mercados
+- Criar listas de compras personalizadas
+- Comparar preços entre mercados próximos
 - Ver ofertas e cestas básicas atualizadas
-- Gerenciar seu perfil e histórico de comparações
-- Fazer login e manter sessão com autenticação JWT
-- Editar perfil, sair e excluir conta
+- Adicionar produtos com foto, nome, preço e categoria
+- Receber notificações push de alertas de preços
+- Visualizar histórico e nomear listas comparadas
+- Editar perfil, sair e excluir conta com confirmação
 
 ---
 
@@ -16,30 +16,30 @@ O **MercadoAqui** é um aplicativo mobile desenvolvido em **React Native com Exp
 
 - React Native (com Expo)
 - Expo Router
-- NestJS (para API e autenticação)
+- Zustand (para controle de estado)
+- NestJS (para API, autenticação e lógica de cestas)
 - MySQL + TypeORM
-- Context API para autenticação
-- `@expo/vector-icons` para ícones
-- `expo-checkbox` para validação de termos
-- `AsyncStorage` para persistência de sessão
-- `FlatList`, `Modal`, `ScrollView`, `StyleSheet`, `TouchableOpacity`, `Alert`
+- `expo-notifications` (notificações push)
+- `expo-image-picker` (envio de imagem)
+- `@expo/vector-icons`, `Modal`, `FlatList`, etc.
 
 ---
 
-## 📁 Estrutura do projetoa
+## 📁 Estrutura do projeto
 
 ```
 app/
 ├── auth/                 # Telas públicas (Login, Cadastro)
-├── protected/(tabs)/    # Telas com navegação por aba
-│   ├── index.js         # Home
-│   ├── cesta.js         # Cesta básica
-│   ├── lista.js         # Lista de compras
-│   ├── historico.js     # Histórico de comparações
-│   └── perfil.js        # Perfil do usuário (com avatar, edição e logout)
-├── components/          # Componentes reutilizáveis (Modal de confirmação, etc)
-├── context/             # Contexto de autenticação (AuthContext.js)
-└── config.js            # (opcional) Centralização da URL da API
+├── protected/(tabs)/    # Telas com navegação por abas
+│   ├── index.js         # Home (produtos e destaque)
+│   ├── cesta.js         # Cesta básica (visualização e painel do funcionário)
+│   ├── lista.js         # Lista de compras e comparação
+│   ├── historico.js     # Histórico de comparações com nome personalizado
+│   └── perfil.js        # Perfil do usuário
+├── components/          # Componentes reutilizáveis (Modais, ProdutoCard, etc)
+├── store/               # Zustand (auth, carrinho, notificações)
+├── utils/               # Funções auxiliares e config.js
+└── assets/              # Ícones, logos e imagens
 ```
 
 ---
@@ -61,11 +61,13 @@ npm install
 yarn
 ```
 
-### 3. Instalar pacotes nativos (se ainda não tiver)
+### 3. Instalar pacotes nativos
 
 ```bash
-npx expo install @react-native-async-storage/async-storage
-npx expo install expo-checkbox expo-router
+npx expo install \
+@react-native-async-storage/async-storage \
+expo-checkbox expo-router \
+expo-image-picker expo-notifications
 ```
 
 ### 4. Iniciar o projeto
@@ -74,48 +76,52 @@ npx expo install expo-checkbox expo-router
 npx expo start
 ```
 
-Você pode abrir no seu celular com o app **Expo Go**, em um emulador ou navegador (modo web).
-
 ---
 
 ## 🧪 Backend (API)
 
-- NestJS com JWT
+- NestJS com autenticação JWT
 - Banco de dados MySQL
-- Endpoint de login: `POST /auth/login`
-- Endpoint de cadastro: `POST /auth/register`
-
-Verifique se seu back-end está rodando localmente na porta `3000` e com `enableCors()` ativado para uso no navegador.
+- Endpoints:
+  - `POST /auth/login` – login
+  - `POST /auth/register` – cadastro
+  - `GET /produtos/aprovados` – lista de produtos visíveis
+  - `GET /cestas` – visualização das cestas básicas
+  - `POST /cestas` – criação de cesta (somente funcionário)
+  - `GET /produtos/pendentes` – moderação
+  - `PUT /produtos/:id/aprovar` – aprovação
 
 ---
 
 ## 👤 Usuário de Teste
 
-Use o seguinte login de teste:
-
-- Email: admin@mercado.com
-- Senha: admin123
+- **Email:** admin@mercado.com  
+- **Senha:** admin123
 
 ---
 
-## ✅ Funcionalidades já implementadas
+## ✅ Funcionalidades implementadas
 
-- [x] Login com autenticação JWT e armazenamento com AsyncStorage
-- [x] Registro de novos usuários com validação e termos de uso
-- [x] Perfil do usuário com nome, email e edição via modal
-- [x] Botão de logout e exclusão de conta com modal de confirmação
-- [x] Integração segura com API usando Context + Token
-- [x] Listas de compras, comparação de mercados e histórico
-- [x] Design moderno, responsivo e com ícones interativos
+- [x] Autenticação JWT com Zustand
+- [x] Registro e login com persistência via AsyncStorage
+- [x] Perfil com edição e exclusão de conta
+- [x] Criação de listas e comparação de preços
+- [x] Nomeação personalizada de listas
+- [x] Histórico de comparações anteriores
+- [x] Cesta básica atualizada diariamente (visualização)
+- [x] Painel de funcionário para montar cesta e aprovar produtos
+- [x] Upload de produtos com foto pelo usuário
+- [x] Sistema de moderação de produtos pendentes
+- [x] Notificações push automáticas após comparação
 
 ---
 
 ## 📌 Observações
 
-- O app foi testado em modo web e dispositivo físico via Expo Go
-- O IP da API pode precisar ser configurado com `config.js`
-- Estrutura pronta para autenticação em múltiplas rotas protegidas
-- Pode ser integrado com Firebase ou banco SQL real facilmente
+- O app funciona via Expo Go (modo web, físico ou emulador)
+- Configure o IP da API corretamente em `utils/config.js`
+- O sistema distingue usuários normais e funcionários
+- A estrutura está preparada para expansão com filtros, gráficos, e Firebase
 
 ---
 
