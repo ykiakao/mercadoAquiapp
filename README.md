@@ -49,8 +49,8 @@ app/
 ### 1. Clonar o repositório
 
 ```bash
-git clone https://github.com/ykiakao/mercadoAqui.git
-cd mercadoAqui
+git clone https://github.com/ykiakao/mercadoAquiapp.git
+cd mercadoAquiapp
 ```
 
 ### 2. Instalar as dependências
